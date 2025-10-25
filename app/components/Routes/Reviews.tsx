@@ -59,7 +59,9 @@ const Reviews = (props: Props) => {
       <div className="w-full md:flex items-center">
         <div className="md:w-[50%] w-full ml-20 mb-20">
           <Image
-            src={require("../../../public/iqryaifqyig1v8glifrj.webp")}
+            // Use the public path for images placed in the `public` folder.
+            // Avoid importing/require()-ing files from `public` — reference them by URL.
+            src="/iqryaifqyig1v8glifrj.webp"
             alt="business"
             width={700}
             height={700}

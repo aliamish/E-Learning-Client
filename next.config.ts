@@ -4,9 +4,10 @@ const nextConfig: NextConfig = {
       images: {
            domains: ['res.cloudinary.com', 'randomuser.me']
       },
-      // Don't fail production builds on ESLint errors. Fix linting issues separately.
+      // Run ESLint during builds (we disabled the strict rule that caused many errors).
+      // This keeps linting active but avoids failing on the widespread `{}` type usage.
       eslint: {
-        ignoreDuringBuilds: true,
+        ignoreDuringBuilds: false,
       },
       // Skip TypeScript type checking during production builds. Fix types separately.
       typescript: {

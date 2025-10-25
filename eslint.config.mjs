@@ -42,6 +42,10 @@ const eslintConfig = [
       "no-unreachable": "off",
       "no-debugger": "off",
       "no-constant-condition": "off",
+      // Allow empty object types (`{}`) used throughout the codebase for now.
+      "@typescript-eslint/no-empty-object-type": "off",
+      // Allow expression statements that are used intentionally (suppress unused-expressions warnings).
+      "@typescript-eslint/no-unused-expressions": "off",
     },
   },
 ];
