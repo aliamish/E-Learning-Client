@@ -12,7 +12,6 @@ import Verification from "../components/Auth/Verification";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import Image from "next/image";
-import avatar from "../../public/assets/avataar.jpg";
 import { useSession } from "next-auth/react";
 import { useLogoutMutation, useSocialAuthMutation } from "@/redux/features/auth/authApi";
 import toast from "react-hot-toast";
@@ -125,7 +124,7 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
                 <>
                   <Link href="/profile">
                     <Image
-                      src={user && user.avatar ? user.avatar.url : avatar}
+                      src={user?.avatar?.url || "/assets/avataar.jpg"} // ✅ fixed here
                       className="w-[30px] h-[30px] rounded-full cursor-pointer"
                       alt="img"
                       width={30}
