@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React, { FC, useEffect, useState } from "react";
 import { AiOutlineCamera } from "react-icons/ai";
-import defaultAvatar from '../../../public/assets/avataar.jpg'
 
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import { styles } from "@/app/styles/styles";
@@ -65,7 +64,8 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
     ? user.avatar
     : avatar
     ? avatar
-    : defaultAvatar;
+    : '/assets/avataar.jpg'
+;
 
   return (
     <div className={` ${theme === "dark" ?  "bg-slate-900" : "bg-white"} w-full flex flex-col justify-center items-center mt-[150px]`}>
