@@ -19,6 +19,7 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/postcss": "^4.1.13",
     "aaxios": "^0.18.1",
+    "autoprefixer": "^10.4.21",
     "axios": "^1.12.2",
     "formik": "^2.4.6",
     "next": "15.5.4",
@@ -41,7 +42,7 @@
     "@types/react-dom": "^19.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
-    "tailwindcss": "^4",
+    "tailwindcss": "^4.1.16",
     "typescript": "^5.9.3"
   }
 }
