@@ -21,7 +21,6 @@ import {
   SettingsIcon,
   ExitToAppIcon,
 } from "./Icon";
-import defaultAvatar from  '../../../../public/assets/avataar.jpg'
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
@@ -146,7 +145,7 @@ const AdminSidebar = () => {
                   alt="profile-user"
                   width={100}
                   height={100}
-                  src={user?.avatar ? user?.avatar.url : defaultAvatar}
+                  src={user?.avatar ? user?.avatar.url : '/assets/avataar.jpg'}
                   style={{
                     cursor: "pointer",
                     borderRadius: "50%",
