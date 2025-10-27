@@ -1,17 +1,5 @@
-import dynamic from "next/dynamic";
-import React from "react";
-
-const CoursesClient = dynamic(() => import("./CoursesClient"), { ssr: false });
-
-const Page = () => {
-  return <CoursesClient />;
-};
-
-export default Page;
-
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
 "use client";
+import dynamic from "next/dynamic";
 import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -26,40 +14,43 @@ import { useTheme } from "next-themes";
 
 type Props = {};
 
-const Page = (props: Props) => {
+const CoursesClient = (props: Props) => {
   const searchParams = useSearchParams();
   const search = searchParams?.get("title");
   const { data, isLoading } = useGetUsersAllCoursesQuery(undefined, {});
   const { data: categoriesData } = useGetHeroDataQuery("Categories", {});
   const [route, setRoute] = useState("Login");
   const [open, setOpen] = useState(false);
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState<any[]>([]);
   const [category, setCategory] = useState("All");
   const { theme } = useTheme();
 
   useEffect(() => {
     if (category === "All") {
-      setCourses(data?.courses);
+      setCourses(data?.courses || []);
     }
     if (category !== "All") {
       setCourses(
-        data?.courses.filter((item: any) => item.categories === category)
+        data?.courses.filter((item: any) => item.categories === category) || []
       );
     }
     if (search) {
       setCourses(
         data?.courses.filter((item: any) =>
           item.name.toLowerCase().includes(search.toLowerCase())
-        )
+        ) || []
       );
     }
   }, [data, category, search]);
 
-  const categories = categoriesData?.layout.categories;
+  const categories = categoriesData?.layout?.categories || [];
 
-  console.log(categories)
   return (
-    <div className={theme === "dark" ? "bg-slate-900 min-h-screen" : "bg-white min-h-screen"}>
+    <div
+      className={
+        theme === "dark" ? "bg-slate-900 min-h-screen" : "bg-white min-h-screen"
+      }
+    >
       {isLoading ? (
         <Loader />
       ) : (
@@ -78,7 +69,11 @@ const Page = (props: Props) => {
               keywords="nextjs ts node js"
             />
             <br />
-            <div className={`w-full flex items-center flex-wrap ${theme === "dark" ? "bg-slate-900" : "bg-white"}`}>
+            <div
+              className={`w-full flex items-center flex-wrap ${
+                theme === "dark" ? "bg-slate-900" : "bg-white"
+              }`}
+            >
               <div
                 className={`h-[35px] mt-40 ${
                   category === "All" ? "bg-[crimson]" : "bg-[#5050cb]"
@@ -92,9 +87,7 @@ const Page = (props: Props) => {
                   <div key={index}>
                     <div
                       className={`h-[35px] mt-40 ${
-                        category === item.title
-                          ? "bg-[crimson]"
-                          : "bg-[#5050cb]"
+                        category === item.title ? "bg-[crimson]" : "bg-[#5050cb]"
                       } m-3 px-3 rounded-[30px] flex items-center justify-center font-Poppins cursor-pointer`}
                       onClick={() => setCategory(item.title)}
                     >
@@ -130,7 +123,4 @@ const Page = (props: Props) => {
   );
 };
 
-export default Page;
-
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+export default CoursesClient;
