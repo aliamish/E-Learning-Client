@@ -22,7 +22,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl }) => {
 
     axios
       .post(
-        `http://localhost:8000/api/v1/getVdoCipherOTP`,
+        `https://e-learning-server-brown.vercel.app/api/v1/getVdoCipherOTP`,
         { videoId: videoUrl },
         { withCredentials: true }
       )
