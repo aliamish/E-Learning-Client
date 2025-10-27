@@ -1,16 +1,3 @@
-import dynamic from "next/dynamic";
-import React from "react";
-
-const CoursesClient = dynamic(() => import("./CoursesClient"), { ssr: false });
-
-const Page = () => {
-  return <CoursesClient />;
-};
-
-export default Page;
-
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
 "use client";
 import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 import { useSearchParams } from "next/navigation";
