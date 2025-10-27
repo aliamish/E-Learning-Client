@@ -1,5 +1,4 @@
 "use client";
-
 import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -68,7 +67,7 @@ const Page = (props: Props) => {
             <br />
             <div className={`w-full flex items-center flex-wrap ${theme === "dark" ? "bg-slate-900" : "bg-white"}`}>
               <div
-                className={`h-[35px] ${
+                className={`h-[35px] mt-40 ${
                   category === "All" ? "bg-[crimson]" : "bg-[#5050cb]"
                 } m-3 px-3 rounded-[30px] flex items-center justify-center font-Poppins cursor-pointer`}
                 onClick={() => setCategory("All")}
@@ -79,7 +78,7 @@ const Page = (props: Props) => {
                 categories.map((item: any, index: number) => (
                   <div key={index}>
                     <div
-                      className={`h-[35px] ${
+                      className={`h-[35px] mt-40 ${
                         category === item.title
                           ? "bg-[crimson]"
                           : "bg-[#5050cb]"

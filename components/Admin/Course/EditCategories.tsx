@@ -86,6 +86,8 @@ const EditCategories = (props: Props) => {
     }
   };
 
+  console.log(categories)
+
   // ----------------------
   // Render
   // ----------------------
