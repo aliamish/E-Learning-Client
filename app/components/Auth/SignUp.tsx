@@ -66,7 +66,7 @@ const SignUp = ({ setRoute }: Props) => {
 
   const { errors, touched, values, handleChange, handleSubmit } = formik;
   return (
-    <div className="w-full">
+    <div className={`w-full p-3 ${theme === "dark" ? "bg-slate-900 text-white" : "bg-white text-black"}`}>
       <h1 className={`${styles.title}`}>Join to ELearning</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
