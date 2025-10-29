@@ -21,7 +21,7 @@ const EditFaq = (props: Props) => {
 
   useEffect(() => {
     if (data?.layout?.faq) {
-      setQuestions(data.layout.faq);
+      setQuestions(data?.layout?.faq);
     }
     if(layoutSuccess){
         toast.success("FAQ updated successfully")
@@ -78,7 +78,7 @@ const EditFaq = (props: Props) => {
 
   const handleEdit = async () => {
     if (
-      !areQuestionsUnchanged(data.layout.faq, questions) &&
+      !areQuestionsUnchanged(data?.layout?.faq, questions) &&
       !isAnyQuestionEmpty(questions)
     ) {
       await editLayout({
