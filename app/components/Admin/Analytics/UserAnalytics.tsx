@@ -37,7 +37,7 @@ const UsersAnalytics = ({ isDashboard }: Props) => {
 
   const analyticsData: any = [];
   data &&
-    data.users.last12Months.forEach((item: any) => {
+    data?.users?.last12Months.forEach((item: any) => {
       analyticsData.push({ name: item.month, count: item.count });
     });
 
