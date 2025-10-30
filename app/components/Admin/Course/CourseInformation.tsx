@@ -39,17 +39,12 @@ const CourseInformation: FC<Props> = ({
   const handleFileChange = (e: any) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Use a blob URL for immediate preview and also read as base64 for upload if needed
-      const objectUrl = URL.createObjectURL(file);
-      // set preview immediately using functional update to avoid stale closures
-      setCourseInfo((prev: any) => ({ ...prev, thumbnail: objectUrl }));
-
-      // Also read as DataURL (base64) for sending to backend if required
       const reader = new FileReader();
-      reader.onload = () => {
-        setCourseInfo((prev: any) => ({ ...prev, thumbnail: reader.result }));
-        // revoke the object URL once base64 is ready
-        try { URL.revokeObjectURL(objectUrl); } catch (err) {}
+
+      reader.onload = (e: any) => {
+        if (reader.readyState === 2) {
+          setCourseInfo({ ...courseInfo, thumbnail: reader.result });
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -72,13 +67,10 @@ const CourseInformation: FC<Props> = ({
     const file = e.dataTransfer.files?.[0];
 
     if (file) {
-      const objectUrl = URL.createObjectURL(file);
-      setCourseInfo((prev: any) => ({ ...prev, thumbnail: objectUrl }));
-
       const reader = new FileReader();
+
       reader.onload = () => {
-        setCourseInfo((prev: any) => ({ ...prev, thumbnail: reader.result }));
-        try { URL.revokeObjectURL(objectUrl); } catch (err) {}
+        setCourseInfo({ ...courseInfo, thumbnail: reader.result });
       };
       reader.readAsDataURL(file);
     }
@@ -183,10 +175,10 @@ const CourseInformation: FC<Props> = ({
               name=""
               id=""
               className={`${styles.input}`}
-              // use the same field name as the backend model: `categories`
-              value={courseInfo.categories}
+              value={courseInfo.category}
               onChange={(e: any) =>
-                setCourseInfo({ ...courseInfo, categories: e.target.value })
+                      setCourseInfo({...courseInfo, Category: e.target.value})
+
               }
             >
               <option value="">Select Category</option>
