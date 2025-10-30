@@ -49,7 +49,7 @@ const Hero: FC = () => {
                <div className=" relative w-[300px] h-[300px] lg:w-[350px] lg:h-[350px] xl:w-[450px] xl:h-[450px] rounded-full [500px] bg-[#17173f] flex items-center justify-center z-0">
                  <div className="relative w-[250px] h-[250px] lg:w-[50px] lg:h-[450px] mt-16 xl:w-[400px] xl:h-[400px] mb-15">
                    <div className="relative flex items-center justify-end">
-                     <img src={data?.layout?.banner?.image?.url } alt="" className=" h-[250px] md:h-[400px] w-[500%] rounded-full [500px]" />
+                     <img src={data?.layout?.banner?.image?.url } alt="" className=" h-[250px] lg:h-[400px] w-[500%] rounded-full [500px]" />
                      <input
                        type="file"
                        name="" 
