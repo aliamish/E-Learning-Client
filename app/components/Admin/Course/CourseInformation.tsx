@@ -175,10 +175,10 @@ const CourseInformation: FC<Props> = ({
               name=""
               id=""
               className={`${styles.input}`}
-              value={courseInfo.category}
+              // use the same field name as the backend model: `categories`
+              value={courseInfo.categories}
               onChange={(e: any) =>
-                      setCourseInfo({...courseInfo, Category: e.target.value})
-
+                setCourseInfo({ ...courseInfo, categories: e.target.value })
               }
             >
               <option value="">Select Category</option>
