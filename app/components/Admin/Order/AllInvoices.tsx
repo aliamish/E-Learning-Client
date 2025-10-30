@@ -73,7 +73,7 @@ const AllInvoices = ({ isDashboard }: Props) => {
   const rows: any = [];
 
   orderData &&
-    orderData.forEach((item: any) => {
+    orderData?.forEach((item: any) => {
       rows.push({
         id: item._id,
         userName: item.userName,

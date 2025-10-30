@@ -86,7 +86,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
       data && data.users.filter((item: any) => item.role === "admin");
 
     newData &&
-      newData.forEach((item: any) => {
+      newData?.forEach((item: any) => {
         rows.push({
           id: item._id,
           name: item.name,
@@ -98,7 +98,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
       });
   } else {
     data &&
-      data.users.forEach((item: any) => {
+      data?.users?.forEach((item: any) => {
         rows.push({
           id: item._id,
           name: item.name,

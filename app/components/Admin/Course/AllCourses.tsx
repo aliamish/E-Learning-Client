@@ -77,7 +77,7 @@ const AllCourses = (props: Props) => {
   }[] = [];
 
   if (data) {
-    data.courses.forEach((item: any) => {
+    data?.courses?.forEach((item: any) => {
       rows.push({
         id: item._id || item.id,
         title: item.title,
