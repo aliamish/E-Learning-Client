@@ -39,12 +39,17 @@ const CourseInformation: FC<Props> = ({
   const handleFileChange = (e: any) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
+      // Use a blob URL for immediate preview and also read as base64 for upload if needed
+      const objectUrl = URL.createObjectURL(file);
+      // set preview immediately using functional update to avoid stale closures
+      setCourseInfo((prev: any) => ({ ...prev, thumbnail: objectUrl }));
 
-      reader.onload = (e: any) => {
-        if (reader.readyState === 2) {
-          setCourseInfo({ ...courseInfo, thumbnail: reader.result });
-        }
+      // Also read as DataURL (base64) for sending to backend if required
+      const reader = new FileReader();
+      reader.onload = () => {
+        setCourseInfo((prev: any) => ({ ...prev, thumbnail: reader.result }));
+        // revoke the object URL once base64 is ready
+        try { URL.revokeObjectURL(objectUrl); } catch (err) {}
       };
       reader.readAsDataURL(file);
     }
@@ -67,10 +72,13 @@ const CourseInformation: FC<Props> = ({
     const file = e.dataTransfer.files?.[0];
 
     if (file) {
-      const reader = new FileReader();
+      const objectUrl = URL.createObjectURL(file);
+      setCourseInfo((prev: any) => ({ ...prev, thumbnail: objectUrl }));
 
+      const reader = new FileReader();
       reader.onload = () => {
-        setCourseInfo({ ...courseInfo, thumbnail: reader.result });
+        setCourseInfo((prev: any) => ({ ...prev, thumbnail: reader.result }));
+        try { URL.revokeObjectURL(objectUrl); } catch (err) {}
       };
       reader.readAsDataURL(file);
     }
