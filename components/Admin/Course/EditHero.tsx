@@ -8,6 +8,9 @@ import { AiOutlineCamera } from "react-icons/ai";
 type Props = {};
 
 const EditHero: FC<Props> = (props: Props) => {
+  // previewImage is used for immediate UI preview (object URL or remote url)
+  const [previewImage, setPreviewImage] = useState("");
+  // image holds the base64 data URL to send to backend (or remote url)
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [subTitle, setSubTitle] = useState("");
@@ -22,6 +25,8 @@ const EditHero: FC<Props> = (props: Props) => {
     if (data) {
       setTitle(data?.layout?.banner?.title);
       setSubTitle(data?.layout?.banner.subTitle);
+      setPreviewImage(data?.layout?.banner?.image?.url);
+      // set image to the remote url by default so backend can re-use it if user doesn't change
       setImage(data?.layout?.banner?.image?.url);
     }
     if(isSuccess){
@@ -40,23 +45,30 @@ const EditHero: FC<Props> = (props: Props) => {
   const handleUpdate = (e:any) => {
     const file = e.target.files?.[0];
     if(file){
-        const reader = new FileReader();
-        reader.onload = (e:any) => {
-            if(reader.readyState === 2) {
-                setImage(e.target.result as string);
-            }
-        };
-        reader.readAsDataURL(file)
+    // immediate preview with object URL
+    const objectUrl = URL.createObjectURL(file);
+    setPreviewImage(objectUrl);
+
+    // read base64 for upload
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImage(reader.result as string);
+      // revoke object url after base64 is ready
+      try { URL.revokeObjectURL(objectUrl); } catch (err) {}
+    };
+    reader.readAsDataURL(file);
     }
   };
 
   const handleEdit = async () => {
-       await editLayout({
-           type:"banner",
-           image,
-           title,
-           subTitle,
-       })
+     // ensure we send base64 if available, otherwise send the existing remote url
+     const payloadImage = image || previewImage;
+     await editLayout({
+       type:"banner",
+       image: payloadImage,
+       title,
+       subTitle,
+     })
   }
 
   return (
@@ -109,7 +121,7 @@ const EditHero: FC<Props> = (props: Props) => {
           ${
             data?.layout?.banner?.title !== title ||
             data?.layout?.banner?.subTitle !== subTitle ||
-            data?.layout?.banner?.image?.url !== image
+              data?.layout?.banner?.image?.url !== (image || previewImage)
               ? "!cursor-pointer !bg-[#42d383]"
               : "!cursor-not-allowed"
           }
@@ -117,7 +129,7 @@ const EditHero: FC<Props> = (props: Props) => {
             onClick={
               data?.layout?.banner?.title !== title ||
               data?.layout?.banner?.subTitle !== subTitle ||
-              data?.layout?.banner?.image?.url !== image
+              data?.layout?.banner?.image?.url !== (image || previewImage)
                 ? handleEdit
                 : () => null
             }
